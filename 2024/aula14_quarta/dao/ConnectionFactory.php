@@ -4,10 +4,10 @@ class ConnectionFactory{
 
     public static function getConnection(){
         $host = "localhost";
-        $dbname = "test";
+        $dbname = "aulaphp";
         $userDb = "root";
         $pass = "";
-        $port = "3307";
+        $port = "3306";
         try{
             $connection = new PDO("mysql:host=$host;dbname=$dbname;port=$port",$userDb, $pass);
             echo "Conectado";

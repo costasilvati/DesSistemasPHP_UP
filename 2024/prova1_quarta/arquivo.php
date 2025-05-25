@@ -14,7 +14,7 @@
         if(in_array($email, $emailsCadatrados)){
             echo "<p> E-mail já está cadastrado no sistema </p>";
         }else{
-            array_push($emailsCadatrados, $email);
+            array_push($emailsCadat rados, $email);
         }
     }
 

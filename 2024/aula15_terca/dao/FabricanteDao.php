@@ -30,6 +30,40 @@ class FabricanteDao{
         
     }
 
+    public function buscarPorId(int $id): ?Fabricante {
+        try {
+            $sql = "SELECT * FROM fabricante WHERE id = :id";
+            $p_sql = ConnectionFactory::getConnection()->prepare($sql);
+            $p_sql->bindValue(":id", $id, PDO::PARAM_INT);
+            $p_sql->execute();
+            $row = $p_sql->fetch(PDO::FETCH_ASSOC);
+            if ($row) {
+                return $this->listaFabricantes($row);
+            } else {
+                return null; // Retorna null se o fabricante não for encontrado
+            }
+        } catch (Exception $e) {
+            print "Ocorreu um erro ao tentar Buscar por ID." . $e;
+            return null;
+        }
+    }
+
+    public function editar(Fabricante $fab): bool {
+        try {
+            $sql = "UPDATE fabricante SET nome = :nome, endereco = :endereco, documento = :documento
+                    WHERE id = :id";
+            $p_sql = ConnectionFactory::getConnection()->prepare($sql);
+            $p_sql->bindValue(":id", $fab->getId(), PDO::PARAM_INT);
+            $p_sql->bindValue(":nome", $fab->getNome());
+            $p_sql->bindValue(":endereco", $fab->getEndereco());
+            $p_sql->bindValue(":documento", $fab->getDocumento());
+            return $p_sql->execute();
+        } catch (Exception $e) {
+            echo "Erro ao Editar Fabricante<br> $e <br>";
+            return false;
+        }
+    }
+
     public function listaFabricantes($row){
         $fabricante = new Fabricante;
         $fabricante->setId($row['id']);
